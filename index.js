@@ -17,6 +17,20 @@ const { fifaData } = require('./fifa.js')
 //(e) 2014 Dünya kupası finali kazananı*/
 
 
+
+const evsahibiTakimIsmi = fifaData.map(x => x["Home Team Name"])
+
+const rakipTakimIsmi = fifaData.map(x => x["Away Team Name"])
+
+const evsahibiGol = fifaData.map(x => x["Home Team Goals"])
+
+const rakipGol = fifaData.map(x => x["Away Team Goals"])
+
+const kazanan = fifaData.map(x => x["Win conditions"])
+
+
+
+
 /*  Görev 2: 
 	Finaller adlı fonksiyonu kullanarak aşağıdakileri uygulayın:
 	1. Bir dizi(array) olan Fifa datasını fonksiyonun birinci parametresi olarak alacak
@@ -25,11 +39,11 @@ const { fifaData } = require('./fifa.js')
 	💡 İPUCU - verilen data içindeki nesnelerin(objects) "Stage" anahtarına bakmalısınız
 */
 
-function Finaller(/* kodlar buraya */) {
-	
-    /* kodlar buraya */
-}
-
+function Finaller(fifaP) {
+	const sadeceFinalMaclari = fifaP.filter(x => x.Stage === "Final");
+	return sadeceFinalMaclari
+	}
+	console.log(Finaller(fifaData));
 
 
 /*  Görev 3: 
@@ -39,11 +53,14 @@ function Finaller(/* kodlar buraya */) {
 	3. Finaller data setindeki tüm yılları içeren "years" adındaki diziyi(array) döndürecek
 	*/
 
-function Yillar(/* kodlar buraya */) {
+	function Yillar(fifaDataP,FinallerP) {
 	
-    /* kodlar buraya */
-}
-
+		const tumYillar = fifaDataP.filter(FinallerP => FinallerP.Year);
+		return tumYillar.map(obj => obj.Year)
+		
+		}
+		console.log(Yillar(fifaData,Finaller)); 
+		
 
 /*  Görev 4: 
 	Bir higher-order fonksiyonunu olan Kazananlar isimli fonksiyona aşağıdakileri uygulayın:  
@@ -55,7 +72,10 @@ function Yillar(/* kodlar buraya */) {
 
 function Kazananlar(/* kodlar buraya */) {
 	
-    /* kodlar buraya */
+
+
+
+	
 	
 }
 
