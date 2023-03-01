@@ -108,18 +108,20 @@ function Finaller(fifaP) {
 	const a = year + " yilinda"; // -> const a = `${year} yilinda`;
 	*/
 
-function YillaraGoreKazananlar(fifaDataP,FinallerCB,YillarCB,KazananlarCB) {
-
-
-const kazananYillar = YillarCB(fifaDataP, FinallerCB);
-const kazananTakimlar = KazananlarCB(fifaDataP,FinallerCB);
-
 /*
 return kazananYillar.reduce((siraliTamListe, simdikiKazananYil, i) => {
 	siraliTamListe.push(`${simidikiKazananYil} yılında, ${kazananTakimlar[i]} dünya kupasını kazandı!`);
 	return siraliTamListe;
 }, []);
 */
+
+function YillaraGoreKazananlar(fifaDataP,FinallerCB,YillarCB,KazananlarCB) {
+
+
+const kazananYillar = YillarCB(fifaDataP, FinallerCB);
+const kazananTakimlar = KazananlarCB(fifaDataP,FinallerCB);
+
+
 const siraliTamListe = [];
 for (let i=0; i < kazananYillar.length; i++) {
 	siraliTamListe.push(`${kazananYillar[i]} yılında, ${kazananTakimlar[i]} dünya kupasını kazandı!`);
@@ -144,9 +146,23 @@ console.log(YillaraGoreKazananlar(fifaData,Finaller,Yillar,Kazananlar))
 	💡 İPUCU: .reduce, .toFixed (dizilim(syntax) için MDN'ye bakın) kullan, ve bunu 2 adımda yapın) 
 	
 */
+/**
+	 * Once toplam atilan gol ortalamasini hesapla, bunu reduce ile yapabilirsin. Ortalamayi bulduktan sonrasi kolay, toFixed ile virgulden sonraki 2 basamagi donebilirsin
+	 * Mesela FinallerArrayi'nde N final datasi olsa, bunlarin ortalamasini hesaplamak icin:
+	 *   (FinallerArrayi[i]["Home Team Goals"] + FinallerArrayi[i]["Away Team Goals"]) / N
+	 * bu islemi tum i'ler (indisler) icin yapman gerekiyor. bunu da reduce ile yapabilirsin.
+	 * Aslinda reduce, basit bir for dongusu gibi calisiyor. Reduce ile, baslangic degerini, her item ile nasil guncelledigini belirtiyorsun.
+	 * Yani, her adimda, o item'daki home team ve away team gollerinin toplaminin N'e bolumunu ekleyebilirsin.
+	 */
 
 function OrtalamaGolSayisi(FinallerArrayi) {
 	
+	const golOrtalamasi = FinallerArrayi.reduce((ortalama, final) => {
+		const yeniOrtalama = (final["Home Team Goals"] + final["Away Team Goals"])/FinallerArrayi.length;
+		return ortalama + yeniOrtalama;
+	}, 0);
+	return golOrtalamasi.toFixed(2);
+
 }
 console.log(OrtalamaGolSayisi(Finaller(fifaData)))
 
